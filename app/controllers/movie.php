@@ -48,5 +48,14 @@ class Movie extends Controller
             header("Location: /movie/search?title=" . urlencode($_POST['title']));
         }
     }
-
+    public function review()
+        {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
+                $title = $_POST['title'];
+                $prompt = "Write a short review for the movie titled '$title'.";
+                $review = $this->api->generateReview($prompt);
+                echo json_encode(['review' => $review]);
+            }
+        }
+    
 }
