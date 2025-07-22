@@ -22,8 +22,8 @@ class Movie extends Controller
     }
     public function search()
     {
-        if (isset($_GET['title'])) {
-            $title = trim($_GET['title']);
+        if (isset($_POST['title'])) {
+            $title = trim($_POST['title']);
             $movie = $this->api->fetchMovie($title);
 
             // Calculate average rating from DB
