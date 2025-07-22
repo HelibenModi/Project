@@ -5,7 +5,7 @@ class Home extends Controller {
     public function index() {
       $user = $this->model('User');
       $data = $user->test();
-			
+			$this->view('movie/search', $data);
 	    $url = 
   "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=YOUR_GEMINI_API_KEY";
 

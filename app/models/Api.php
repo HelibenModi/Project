@@ -1,7 +1,12 @@
 <?php
 class Api {
-    private $omdbKey = 'YOUR_OMDB_API_KEY';
-    private $geminiKey = 'YOUR_GEMINI_API_KEY';
+    private $omdbKey;
+    private $geminiKey;
+
+    public function __construct() {
+        $this->omdbKey = getenv('YOUR_OMDB_API_KEY');
+        $this->geminiKey = getenv('YOUR_GEMINI_API_KEY');
+    }
 
     public function fetchMovie($title) {
         $url = "http://www.omdbapi.com/?t=" . urlencode($title) . "&apikey=" . $this->omdbKey;
@@ -10,6 +15,7 @@ class Api {
 
     public function generateReview($prompt) {
         $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" . $this->geminiKey;
+
         $data = json_encode([
             "contents" => [[
                 "parts" => [[ "text" => $prompt ]]
