@@ -4,8 +4,8 @@ class Api {
     private $geminiKey;
 
     public function __construct() {
-        $this->omdbKey = getenv('YOUR_OMDB_API_KEY');
-        $this->geminiKey = getenv('YOUR_GEMINI_API_KEY');
+        $this->omdbKey = getenv('OMDB_API_KEY');
+        $this->geminiKey = getenv('GEMINI_API_KEY');
     }
 
     public function fetchMovie($title) {

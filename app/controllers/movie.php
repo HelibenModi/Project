@@ -2,7 +2,7 @@
 
 require_once 'app/models/Api.php';
 require_once 'app/models/User.php'; // if needed for user data
-require_once 'database.php'; // your PDO instance
+//require_once 'database.php'; // your PDO instance
 
 class Movie extends Controller
 {
@@ -20,25 +20,24 @@ class Movie extends Controller
     {
         $this->view('movie/search');
     }
-    public function search()
-    {
-        if (isset($_POST['title'])) {
-            $title = trim($_POST['title']);
-            $movie = $this->api->fetchMovie($title);
+        public function search()
+        {
+            $title = $_GET['title'] ?? '';
 
-            // Calculate average rating from DB
-            $stmt = $this->db->prepare("SELECT ROUND(AVG(rating), 1) AS avg_rating FROM ratings WHERE movie_title = ?");
-            $stmt->execute([$title]);
-            $avgRating = $stmt->fetch()['avg_rating'] ?? 'No ratings yet';
+            if (empty($title)) {
+                echo "No title provided.";
+                return;
+            }
 
-            $this->view('movie/show', [
-                'movie' => $movie,
-                'avgRating' => $avgRating
-            ]);
-        } else {
-            header('Location: /movie');
+            $api = $this->model('Api');
+            $movie = $api->fetchMovie($title);
+
+            if (!$movie || $movie['Response'] === 'False') {
+                $this->view('movie/notfound', ['title' => $title]);
+            } else {
+                $this->view('movie/show', ['movie' => $movie]);
+            }
         }
-    }
 
     public function rate()
     {
