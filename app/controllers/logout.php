@@ -1,11 +1,14 @@
 <?php
-
-class Logout extends Controller {
-
-    public function index() {		
-	    session_start();
-        $_SESSION = array();
-        session_destroy();
-        header('location:/login');
-    }
+// Start session if not started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
+
+// Destroy session data
+$_SESSION = [];
+session_destroy();
+
+// Redirect to homepage
+header('Location: /');
+exit;
+?>
