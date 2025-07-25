@@ -1,6 +1,6 @@
 <?php
 if (isset($_SESSION['auth']) == 1) {
-    header('Location: /movie/search');
+    header('Location: /home');
 }
 ?>
 

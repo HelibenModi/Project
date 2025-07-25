@@ -1,6 +1,6 @@
 <?php
 if (!isset($_SESSION['auth'])) {
-    header('Location: /movie/search');
+    header('Location: /login');
 }
 ?>
 <!DOCTYPE html>
