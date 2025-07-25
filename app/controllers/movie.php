@@ -43,5 +43,33 @@ class Movie extends Controller {
             'title' => $movie["Title"]
         ]);
     }
+
+    
+    public function rate() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $movieTitle = $_POST['movie_title'] ?? '';
+            $rating = (int) ($_POST['rating'] ?? 0);
+
+            if (empty($movieTitle) || $rating < 1 || $rating > 5) {
+                // Invalid rating submission
+                header("Location: /movie/index");
+                exit;
+            }
+
+            // Simple DB Example (PDO assumed)
+            $db = new PDO(DB_DSN, DB_USER, DB_PASS);
+            $stmt = $db->prepare("INSERT INTO ratings (movie_title, rating, created_at) VALUES (?, ?, NOW())");
+            $stmt->execute([$movieTitle, $rating]);
+
+            // With this:
+            header("Location: /movie/search?title=" . urlencode($movieTitle) . "&success=1");
+            exit;
+        } else {
+            // Invalid access method
+            header("Location: /movie/index");
+            exit;
+        }
+    }
+
 }
 ?>

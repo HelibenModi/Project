@@ -13,9 +13,18 @@
         </div>
 
         <!-- Include the rating form -->
-     <a href="/movie/rating" class="btn btn-success mt-3">Add your Ratings</a>
-      
-    <?php else: ?>
-        <div class="alert alert-danger">Movie not found.</div>
-        <a href="/movie/index" class="btn btn-secondary">Search Another Movie</a>
-    <?php endif;
+        <?php require 'app/views/movie/rating.php'; ?>
+    <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            Thank you! Your rating has been submitted successfully.
+        </div>
+    <?php endif; ?>
+
+    <?php elseif (isset($error)): ?>
+        <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+        <a href="/movie/index" class="btn btn-secondary mt-3">Search Another Movie</a>
+    <?php endif; ?>
+
+</main>
+<?php require 'app/views/templates/footer.php'; ?>

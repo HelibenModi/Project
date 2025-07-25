@@ -19,3 +19,4 @@ define('DB_USER',         '4806_spiritmud');
 define('DB_PASS',         $_ENV['DB_PASS']);
 define('DB_DATABASE',     '4806_spiritmud');
 define('DB_PORT',         '61000');
+define('DB_DSN', 'mysql:host=' . DB_HOST . ';dbname=' . DB_DATABASE . ';port=' . DB_PORT);

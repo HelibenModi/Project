@@ -9,7 +9,7 @@ class Controller {
     
     public function view($view, $data = [])
     {
-        extract($data);  // ✅ required
+        extract($data);  
         require_once "app/views/$view.php";
     }
 
