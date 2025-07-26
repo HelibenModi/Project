@@ -7,9 +7,9 @@ class Create extends Controller {
     }
 
     public function register() {
-        //session_start();
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            session_start();
+
             $username = trim($_POST['username']);
             $password = $_POST['password'];
             $confirm_password = $_POST['confirm_password'];
@@ -26,6 +26,13 @@ class Create extends Controller {
                 exit;
             }
 
+            // Password strength validation in PHP (server-side)
+            if (!preg_match('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/', $password)) {
+                $_SESSION['error'] = "Password must contain uppercase, lowercase, number and be at least 8 characters long.";
+                header('Location: /create/index');
+                exit;
+            }
+
             $user = $this->model('User');
             if ($user->userExists($username)) {
                 $_SESSION['error'] = "Username already taken.";
@@ -34,10 +41,9 @@ class Create extends Controller {
             }
 
             $user->register($username, $password);
-            $_SESSION['success'] = "Account created successfully. You can now log in.";
+            $_SESSION['success'] = "Account created successfully. Please log in.";
             header('Location: /login/index');
             exit;
         }
     }
 }
-?>
